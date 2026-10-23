@@ -1,0 +1,56 @@
+{
+  "name": "custom_bot",
+  "version": "2.0.1",
+  "type": "module",
+  "main": "assistant.js",
+  "scripts": {
+    "test": "node test_router.js && node test_executor.js && node test_integration.js",
+    "test:router": "node test_router.js",
+    "test:executor": "node test_executor.js",
+    "test:integration": "node test_integration.js",
+    "test:interactive": "node test_assistant_interactive.js",
+    "test:llm-engine": "node test_llm_engine.js",
+    "test:prompts": "node test_prompt_templates.js",
+    "test:intent": "node test_intent_classifier.js",
+    "test:response": "node test_response_generator.js",
+    "test:context": "node test_context_manager.js",
+    "test:memory": "node test_memory_store.js",
+    "test:bridge": "node test_action_bridge.js",
+    "test:hybrid": "node test_hybrid_execution.js",
+    "test:orchestrator": "node test_jarvis_orchestrator.js",
+    "test:checkpoint": "node verify_checkpoint_8.js",
+    "test:training": "node test_training_pipeline.js",
+    "test:unit": "node run_all_unit_tests.js",
+    "test:cross": "node test_cross_component_integration.js",
+    "test:e2e": "node test_e2e_scenarios.js",
+    "test:perf": "node test_performance_benchmarks.js",
+    "test:audio": "node test_audio_interface.js",
+    "test:speech": "node test_speech_recognition.js",
+    "test:electron": "node test_electron_ipc.js",
+    "test:dynamic": "node test_dynamic_agent.js",
+    "test:observable": "node test_e2e_observable.js",
+    "test:final": "node verify_final_system.js",
+    "lint:docs": "node scripts/lint_doc_links.js",
+    "lint:clean": "git diff --quiet",
+    "dev:searx": "docker compose up -d searxng",
+    "test:comprehensive": "node run_all_unit_tests.js && node test_cross_component_integration.js && node test_e2e_scenarios.js && node test_performance_benchmarks.js && node test_audio_interface.js && node test_dynamic_agent.js",
+    "data:generate": ".\\venv\\Scripts\\python.exe python/training/data_generator.py && .\\venv\\Scripts\\python.exe python/training/dataset_validator.py",
+    "data:export-chat": "node scripts/export_chat_dataset.js",
+    "train:buddy": "python scripts/train_buddy.py",
+    "train:buddy:dry": "python scripts/train_buddy.py --dry-run",
+    "test:all": "npm run test && npm run test:interactive",
+    "jarvis": "node assistant.js",
+    "start": "node assistant.js",
+    "gui": "npx electron electron/main.cjs",
+    "electron": "npx electron electron/main.cjs"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

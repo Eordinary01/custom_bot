@@ -1,0 +1,44 @@
+# JARVIS Conversational AI - Python ML Dependencies
+# Requirements for task 1.1
+# Python 3.11+
+
+# Core LLM Inference Engine
+# llama-cpp-python for local model inference (CPU-only build)
+llama-cpp-python==0.2.90
+
+# Hugging Face Transformers ecosystem
+transformers==4.44.2
+tokenizers==0.19.1
+
+# PyTorch (CPU version for Windows)
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# Fine-tuning and optimization
+peft==0.12.0  # Parameter-Efficient Fine-Tuning (LoRA)
+bitsandbytes==0.43.3  # Quantization support
+accelerate==0.34.2  # Training acceleration
+
+# Data handling
+datasets==2.21.0  # Hugging Face datasets
+
+# Supporting libraries
+numpy==1.26.4
+scipy==1.14.1
+scikit-learn==1.5.2
+
+# JSON-RPC for Node.js IPC
+jsonrpcserver==5.0.9
+jsonrpcclient==4.0.3
+
+# Utilities
+tqdm==4.66.5  # Progress bars
+huggingface-hub==0.24.7  # Model downloads
+safetensors==0.4.5  # Safe model serialization
+
+# Database for memory management
+# (SQLite is built into Python, no separate package needed)
+
+# Optional: ONNX runtime for intent classification
+onnxruntime==1.19.2

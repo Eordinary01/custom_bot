@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JARVIS — Conversational AI Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="hud-container">
+    <!-- Header / Titlebar -->
+    <header class="hud-header">
+      <div class="titlebar-drag">
+        <div class="hud-logo">
+          <div class="mini-reactor"></div>
+          <span class="logo-text">JARVIS <span class="version-tag">v3.0</span></span>
+        </div>
+        <div class="system-status">
+          <span class="status-indicator online"></span>
+          <span id="personaBadge" class="badge badge-persona">BALANCED</span>
+          <span id="audioBadge" class="badge badge-audio audio-idle">IDLE</span>
+          <span id="micHardwareBadge" class="badge badge-mic">
+            <span class="mic-dot"></span> <span id="micStatusText">MIC ACTIVE</span>
+          </span>
+        </div>
+      </div>
+      <div class="window-controls">
+        <button id="minimizeBtn" class="control-btn" title="Minimize">−</button>
+        <button id="closeBtn" class="control-btn close" title="Hide to Tray">×</button>
+      </div>
+    </header>
+
+    <!-- System Notice / Error Banner -->
+    <div id="hudErrorBanner" class="hud-error-banner hidden">
+      <span class="error-badge-icon">⚠️</span>
+      <span id="hudErrorText" class="error-text">Engine notice</span>
+      <button id="dismissErrorBtn" class="dismiss-error-btn" title="Dismiss notice">✕</button>
+    </div>
+
+    <!-- Conversation Dashboard Top Stage -->
+    <section class="dashboard-hero">
+      <!-- Arc Reactor Core -->
+      <div class="reactor-col">
+        <div id="reactorCore" class="arc-reactor idle">
+          <div class="ring outer-ring"></div>
+          <div class="ring middle-ring"></div>
+          <div class="ring inner-ring"></div>
+          <div class="core-glow"></div>
+          <div id="reactorStatusText" class="reactor-text">ONLINE</div>
+        </div>
+      </div>
+
+      <!-- Real-time Voice & Vocal Visualizer Panel -->
+      <div class="vocal-monitor-panel">
+        <div class="vocal-header">
+          <div class="vocal-title-wrap">
+            <span class="vocal-icon">🎙️</span>
+            <span class="vocal-title">VOICE ACTIVITY & VOCAL SPECTRUM</span>
+          </div>
+          <div class="vocal-stats">
+            <span id="micLevelLabel" class="vocal-stat-pill">LEVEL: <strong id="micLevelText">0%</strong></span>
+            <span id="confidenceLabel" class="vocal-stat-pill hidden">CONFIDENCE: <strong id="confidenceText">0%</strong></span>
+          </div>
+        </div>
+
+        <!-- Dynamic Vocal Length Waveform / Equalizer Bars -->
+        <div class="vocal-spectrum-container">
+          <div id="vocalBars" class="vocal-bars">
+            <!-- 20 dynamic frequency & vocal length bars -->
+            <span class="vocal-bar" data-idx="0"></span>
+            <span class="vocal-bar" data-idx="1"></span>
+            <span class="vocal-bar" data-idx="2"></span>
+            <span class="vocal-bar" data-idx="3"></span>
+            <span class="vocal-bar" data-idx="4"></span>
+            <span class="vocal-bar" data-idx="5"></span>
+            <span class="vocal-bar" data-idx="6"></span>
+            <span class="vocal-bar" data-idx="7"></span>
+            <span class="vocal-bar" data-idx="8"></span>
+            <span class="vocal-bar" data-idx="9"></span>
+            <span class="vocal-bar" data-idx="10"></span>
+            <span class="vocal-bar" data-idx="11"></span>
+            <span class="vocal-bar" data-idx="12"></span>
+            <span class="vocal-bar" data-idx="13"></span>
+            <span class="vocal-bar" data-idx="14"></span>
+            <span class="vocal-bar" data-idx="15"></span>
+            <span class="vocal-bar" data-idx="16"></span>
+            <span class="vocal-bar" data-idx="17"></span>
+            <span class="vocal-bar" data-idx="18"></span>
+            <span class="vocal-bar" data-idx="19"></span>
+          </div>
+        </div>
+
+        <!-- Vocal Volume Gauge Meter -->
+        <div class="vocal-gauge-wrap">
+          <div class="vocal-gauge-track">
+            <div id="vocalGaugeFill" class="vocal-gauge-fill"></div>
+            <div class="vocal-gauge-threshold" title="Detection Threshold"></div>
+          </div>
+        </div>
+
+        <!-- Live Subtext / Transcript Feed -->
+        <div class="vocal-status-row">
+          <div id="voiceStatusPill" class="voice-status-pill idle">
+            <span class="pulse-indicator"></span>
+            <span id="voiceStatusText">STANDBY • SAY "HEY JARVIS"</span>
+          </div>
+          <div id="speechSubtext" class="speech-subtext">Awaiting vocal input or click Push-to-Talk</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Conversation Stream -->
+    <main id="chatStream" class="chat-stream">
+      <div id="startupPlaceholder" class="startup-placeholder">
+        <div class="startup-spinner"></div>
+        <div class="startup-content">
+          <div class="startup-title">INITIALIZING JARVIS SYSTEM</div>
+          <div class="startup-desc">Connecting speech recognition engine & verifying local LLM...</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Quick Voice Action Suggestions -->
+    <div class="voice-chips-container">
+      <span class="chip-label">Suggestions:</span>
+      <button class="voice-chip" data-cmd="Hey JARVIS">🎙️ "Hey JARVIS"</button>
+      <button class="voice-chip" data-cmd="What time is it?">⏱️ "What time is it?"</button>
+      <button class="voice-chip" data-cmd="Open YouTube">▶️ "Open YouTube"</button>
+      <button class="voice-chip" data-cmd="Suggest something for me to watch">🎬 "Suggest something to watch"</button>
+      <button class="voice-chip" data-cmd="System status report">📊 "System status"</button>
+    </div>
+
+    <!-- Destructive Action Confirmation Modal -->
+    <div id="actionModal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="warning-icon">⚠️</div>
+          <h3>System Action Confirmation</h3>
+        </div>
+        <div class="modal-body">
+          <p id="actionWarningText">A sensitive system action was requested.</p>
+          <div class="action-details">
+            <span class="action-label">Action Target:</span>
+            <span id="actionTargetName" class="action-name">shutdown</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="cancelActionBtn" class="modal-btn cancel">Cancel</button>
+          <button id="confirmActionBtn" class="modal-btn confirm">Authorize Proceed</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Input & Voice Control Bar -->
+    <footer class="hud-footer">
+      <div class="footer-controls">
+        <button id="pttBtn" class="ptt-btn" title="Push-to-Talk (Click or hold to speak)">
+          <div class="ptt-pulse-ring"></div>
+          <svg class="mic-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path fill="currentColor" d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+          <span class="ptt-text">PTT</span>
+        </button>
+
+        <button id="stopBtn" class="stop-btn hidden" title="Interrupt Speaking (Stop TTS)">
+          <span class="stop-icon">⏹</span> Interrupt
+        </button>
+
+        <div class="input-field-wrap">
+          <input id="messageInput" type="text" placeholder="Speak or type a command... ('Hey JARVIS')" autocomplete="off">
+          <button id="sendBtn" class="send-btn" title="Send Message">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

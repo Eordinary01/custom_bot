@@ -1,0 +1,49 @@
+{
+  "assistant": {
+    "name": "JARVIS",
+    "userName": "Sir",
+    "systemStatus": "All systems nominal"
+  },
+  "personality": {
+    "preset": "STRICT",
+    "formality": 0.7,
+    "verbosity": 0.6,
+    "humor": 0.5,
+    "empathy": 0.8
+  },
+  "performance": {
+    "responseTimeoutMs": 15000,
+    "inferenceTimeoutMs": 12000,
+    "maxContextTurns": 20,
+    "maxResponseTokens": 150
+  },
+  "features": {
+    "contextMemory": true,
+    "longTermPersistence": true,
+    "actionExecution": true,
+    "llmFallback": true,
+    "privacyMasking": true
+  },
+  "logging": {
+    "level": "INFO",
+    "logDir": "logs",
+    "logFileName": "jarvis.log",
+    "maxFileSizeBytes": 10485760,
+    "maxFiles": 5,
+    "consoleOutput": true
+  },
+  "model": {
+    "modelPath": "models/phi-3-mini-4k-q4.gguf",
+    "pythonServerPath": "python/llm_server.py",
+    "threads": 4,
+    "contextWindow": 4096
+  },
+  "security": {
+    "confirmDestructiveActions": true,
+    "destructiveActions": [
+      "shutdown",
+      "restart",
+      "delete_file"
+    ]
+  }
+}

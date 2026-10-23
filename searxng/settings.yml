@@ -1,0 +1,17 @@
+# SearXNG configuration for JARVIS local meta-search
+use_default_settings: true
+
+general:
+  instance_name: "JARVIS Local Search"
+
+server:
+  secret_key: "496c47f1a331509859024995cdb8e789dfdba22280146df580f9abcaf001edb1"
+  limiter: false
+  image_proxy: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  formats:
+    - html
+    - json
